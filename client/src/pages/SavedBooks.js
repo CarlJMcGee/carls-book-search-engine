@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   Jumbotron,
   Container,
@@ -8,6 +8,7 @@ import {
   Button,
 } from "react-bootstrap";
 import { GET_ME } from "../utils/queries";
+import { REMOVE_BOOK } from "../utils/mutations";
 
 import { getMe, deleteBook } from "../utils/API";
 import Auth from "../utils/auth";
@@ -15,7 +16,17 @@ import { removeBookId } from "../utils/localStorage";
 
 const SavedBooks = () => {
   const [dataError, setError] = useState(null);
-  const { loading, error, data } = useQuery(GET_ME);
+  const {
+    loading: getting,
+    error: queryError,
+    data: queryData,
+  } = useQuery(GET_ME);
+  const [removeBook, { data: input, loading, error }] = useMutation(
+    REMOVE_BOOK,
+    {
+      refetchQueries: [{ query: GET_ME }],
+    }
+  );
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
@@ -25,24 +36,24 @@ const SavedBooks = () => {
       return false;
     }
 
-    try {
-      const response = await deleteBook(bookId, token);
+    removeBook({ variables: { bookId: bookId } });
 
-      if (!response.ok) {
-        throw new Error("something went wrong!");
-      }
+    // try {
+    //   if (!response.ok) {
+    //     throw new Error("something went wrong!");
+    //   }
 
-      const updatedUser = await response.json();
-      // setUserData(updatedUser);
-      // upon success, remove book's id from localStorage
-      removeBookId(bookId);
-    } catch (err) {
-      console.error(err);
-    }
+    //   const updatedUser = await response.json();
+    //   // setUserData(updatedUser);
+    //   // upon success, remove book's id from localStorage
+    //   removeBookId(bookId);
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   // if data isn't here yet, say so
-  if (loading) {
+  if (getting) {
     return <h2>LOADING...</h2>;
   }
 
@@ -50,7 +61,7 @@ const SavedBooks = () => {
   if (dataError) {
     return <h2>Unable to Load Saved Books</h2>;
   }
-  const userData = data.me;
+  const userData = queryData.me;
 
   return (
     <>
