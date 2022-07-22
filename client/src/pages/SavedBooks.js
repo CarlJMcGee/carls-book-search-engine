@@ -10,7 +10,6 @@ import {
 import { GET_ME } from "../utils/queries";
 import { REMOVE_BOOK } from "../utils/mutations";
 
-import { getMe, deleteBook } from "../utils/API";
 import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
@@ -20,7 +19,9 @@ const SavedBooks = () => {
     loading: getting,
     error: queryError,
     data: queryData,
-  } = useQuery(GET_ME);
+  } = useQuery(GET_ME, {
+    fetchPolicy: "cache-and-network",
+  });
   const [removeBook, { data: input, loading, error }] = useMutation(
     REMOVE_BOOK,
     {
