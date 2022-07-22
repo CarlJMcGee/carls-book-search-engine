@@ -29,12 +29,6 @@ const LoginForm = () => {
     }
 
     try {
-      // const response = await loginUser(userFormData);
-
-      // if (!response.ok) {
-      //   throw new Error('something went wrong!');
-      // }
-
       const {
         data: {
           login: { token },
