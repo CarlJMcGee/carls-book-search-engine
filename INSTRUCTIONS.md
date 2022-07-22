@@ -180,7 +180,7 @@ Additionally, you’ll need to complete the following tasks in each of these fro
 
   - ✔️ Use the `useMutation()` Hook to execute the `REMOVE_BOOK` mutation in the `handleDeleteBook()` function instead of the `deleteBook()` function that's imported from `API` file. Define and export the `REMOVE_BOOK` mutation in a new file at `/client/src/utils/mutations.js`. (Make sure you keep the `removeBookId()` function in place!)
 
-- 🔵 `SignupForm.js`: Replace the `addUser()` functionality imported from the `API` file with the `ADD_USER` mutation functionality. Define and export the `ADD_USER` mutation in a new file at `/client/src/utils/mutations.js`.
+- ✔️ `SignupForm.js`: Replace the `addUser()` functionality imported from the `API` file with the `ADD_USER` mutation functionality. Define and export the `ADD_USER` mutation in a new file at `/client/src/utils/mutations.js`.
 
 - ✔️ `LoginForm.js`: Replace the `loginUser()` functionality imported from the `API` file with the `LOGIN_USER` mutation functionality. Define and export the `LOGIN_USER` mutation in a new file at `/client/src/utils/mutations.js`.
 
